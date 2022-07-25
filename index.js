@@ -1,17 +1,21 @@
-import express from 'express';
-import students from './routes/students.js';
-import teachers from './routes/teachers.js';
-import courses from './routes/courses.js';
+import express from "express";
+import bodyparser from "body-parser";
+import cors from "cors";
+import mongoose from "mongoose"
+import bookRouter from "./routes/book.js";
 
-const app = express()
+const app = express();
+app.use(bodyparser.json());
+app.use(cors());
 
-app.use('/students', students); 
-// '/students' is the prefix for the students routes
+const connection = mongoose.connection
+connection.once("connected", () => console.log("Database Connected ~"))
+connection.on("error", error => console.log("Database Error: ", error))
+await mongoose.connect("mongodb://localhost:27017/my_first_data_base", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
 
-app.use('/teachers', teachers); 
-// '/teachers' is the prefix for the teachers routes
+app.use("/book", bookRouter);
 
-app.use('/courses', courses);   
-// '/courses' is the prefix for the courses routes
-
-app.listen(3000);
+app.listen(9999)
