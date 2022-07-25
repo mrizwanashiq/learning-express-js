@@ -1,37 +1,103 @@
+// Importing package
 import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app = express();
+const port = 3000;
 
-/**
- * The first line here is grabbing the main Express module from the package you installed. 
- * This module is a function, which we then run on the second line to create our app variable. 
- * You can create multiple apps this way, each with its own requests and responses.
- */
+// Where we will keep books
+let books = [];
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+// Configuring middlewares
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-/**
- * These lines of code is where we tell our Express server how to handle a GET request to our server. 
- * Express includes similar functions for POST, PUT, PATCH, DELETE, etc. using app.post(...), app.put(...), etc.
- * 
- * These functions take two main parameters. The first is the URL for this function to act upon. 
- * In this case, we are targeting '/', which is the root of our website: in this case, localhost:3000.
- * 
- * The second parameter is a function with two arguments: req, and res. 
- * req represents the request that was sent to the server; We can use this object to read data about what the client is requesting to do. 
- * res represents the response that we will send back to the client.
- * Here, we are calling a function on res to send back a response: 'Successful response.'.
- */
+// POST API
+app.post('/book', (req, res) => {
+  const book = req.body;
 
-app.listen(5000, function () {
-    console.log('Started application on port 5000');
+  // here length of books' array will be the id of that book
+  book.id = books.length;
+
+  // Output the book to the console for debugging
+  console.log(book);
+  books.push(book);
+
+  res.send('Book is added to the database');
 });
 
-/**
- * Finally, once we’ve set up our requests, we must start our server! 
- * We are passing 3000 into the listen function, which tells the app which port to listen on. 
- * The function passed in as the second parameter is optional and runs when the server starts up. 
- * This provides us some feedback in the console to know that our application is running.
- */
+// GET API
+app.get('/books', (req, res) => {
+  res.json(books);
+});
+
+// GET by ID API
+app.get('/book/:id', (req, res) => {
+  // Reading ID from the URL
+  const id = req.params.id;
+
+  // Searching books for the id
+  for (let book of books) {
+      if (book.id === id) {
+          res.json(book);
+          return;
+      }
+  }
+
+  // Sending 404 when not found something is a good practice
+  res.status(404).send('Book not found');
+});
+
+// PUT API
+app.put('/book/:id', (req, res) => {
+  // Reading id from the URL
+  const id = req.params.id;
+  const book = req.body;
+
+  // Remove item from the books array
+  for (let i = 0; i < books.length; i++) {
+      let book = books[i]
+      if (book.id === id) {
+          books[i] = book;
+      }
+  }
+
+  res.send('Book is replace');
+});
+
+// PATCH API
+app.patch('/book/:id', (req, res) => {
+  // Reading id from the URL
+  const id = req.params.id;
+  const book = req.body;
+
+  // Remove item from the books array
+  for (let i = 0; i < books.length; i++) {
+      let book = books[i]
+      if (book.id === id) {
+          books[i] = {...book[i], ...book};
+      }
+  }
+
+  res.send('Book is update');
+});
+
+// DELETE API
+app.delete('/book/:id', (req, res) => {
+  // Reading id from the URL
+  const id = req.params.id;
+
+  // Remove item from the books array
+  books = books.filter(i => {
+      if (i.id !== id) {
+          return true;
+      }
+      return false;
+  });
+
+  res.send('Book is deleted');
+});
+
+app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
