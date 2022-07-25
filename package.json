@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon index.js"
   },
-  "author": "",
+  "author": "mrizwanashiq",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.2",
