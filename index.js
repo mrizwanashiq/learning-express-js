@@ -36,7 +36,7 @@ app.get('/books', (req, res) => {
 // GET by ID API
 app.get('/book/:id', (req, res) => {
   // Reading ID from the URL
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
 
   // Searching books for the id
   for (let book of books) {
@@ -53,8 +53,9 @@ app.get('/book/:id', (req, res) => {
 // PUT API
 app.put('/book/:id', (req, res) => {
   // Reading id from the URL
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
   const book = req.body;
+  book.id = id;
 
   // Remove item from the books array
   for (let i = 0; i < books.length; i++) {
@@ -70,13 +71,13 @@ app.put('/book/:id', (req, res) => {
 // PATCH API
 app.patch('/book/:id', (req, res) => {
   // Reading id from the URL
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
   const book = req.body;
+  book.id = id;
 
   // Remove item from the books array
   for (let i = 0; i < books.length; i++) {
-      let book = books[i]
-      if (book.id === id) {
+      if (book[i].id === id) {
           books[i] = {...book[i], ...book};
       }
   }
@@ -87,7 +88,7 @@ app.patch('/book/:id', (req, res) => {
 // DELETE API
 app.delete('/book/:id', (req, res) => {
   // Reading id from the URL
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
 
   // Remove item from the books array
   books = books.filter(i => {
