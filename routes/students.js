@@ -14,14 +14,14 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
     const id = req.params.id
-    const student = students.find(student => student.id === id)
+    const student = students.find(student => student.id == id)
     student.name = req.body.name
     res.send(students)
 })
 
 router.delete('/:id', (req, res) => {
     const id = req.params.id
-    students = students.filter(student => student.id !== id)
+    students = students.filter(student => student.id != id)
     res.send(students)
 })
 
