@@ -3,6 +3,8 @@ const router = express.Router();
 import userModel from "../models/user.js";
 import authenticate from "../middlewares/authenticate.js";
 import jwt from "jsonwebtoken";
+import validate from "../middlewares/validate.js";
+import schema from "../validations/user.validation.js";
 
 router.get("/", authenticate, async (req, res) => {
     try {
@@ -13,7 +15,7 @@ router.get("/", authenticate, async (req, res) => {
     }
 })
 
-router.get("/:id", authenticate, async (req, res) => {
+router.get("/:id", authenticate, validate(schema.params), async (req, res) => {
     try {
         const user = await userModel.findById(req.params.id);
         res.send(user);
@@ -22,7 +24,7 @@ router.get("/:id", authenticate, async (req, res) => {
     }
 })
 
-router.post("/register", async (req, res) => {
+router.post("/register", validate(schema.register), async (req, res) => {
     try {
         const user = await userModel.create(req.body);
         res.send(user);
@@ -31,7 +33,7 @@ router.post("/register", async (req, res) => {
     }
 })
 
-router.post("/login", async (req, res) => {
+router.post("/login", validate(schema.login), async (req, res) => {
     try {
         const user = await userModel.findOne({ email: req.body.email, password: req.body.password });
         if (!user) return res.status(401).send("Invalid email or password.");
@@ -42,7 +44,7 @@ router.post("/login", async (req, res) => {
     }
 })
 
-router.patch("/:id", authenticate, async (req, res) => {
+router.patch("/:id", authenticate, validate(schema.update), async (req, res) => {
     try {
         const user = await userModel.findByIdAndUpdate(req.params.id, req.body);
         res.send(user);
@@ -51,7 +53,7 @@ router.patch("/:id", authenticate, async (req, res) => {
     }
 })
 
-router.delete("/:id", authenticate, async (req, res) => {
+router.delete("/:id", authenticate, validate(schema.params), async (req, res) => {
     try {
         const user = await userModel.findByIdAndDelete(req.params.id);
         res.send(user);
