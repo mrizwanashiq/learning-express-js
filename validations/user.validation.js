@@ -5,7 +5,7 @@ const register = {
     name: Joi.string().required(),
     email: Joi.string().required().email(),
     password: Joi.string().required(),
-    age: Joi.string().required(),
+    age: Joi.string(),
   }),
 };
 
