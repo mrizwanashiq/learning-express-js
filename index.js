@@ -1,13 +1,17 @@
-import express from "express";
-import bodyparser from "body-parser";
-import cors from "cors";
-import mongoose from "mongoose"
-import userRouter from "./routes/user.js";
+const express = require("express");
+const expressLayouts = require('express-ejs-layouts');
+const bodyParser = require('body-parser');
+const path = require("path");
+const mongoose = require("mongoose");
 
 const app = express();
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(cors());
+
+app.set("view engine",'ejs');
+app.use(expressLayouts);
+app.set('layout', 'layouts');
+app.set('views', path.join(__dirname, '/views'));
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 const connection = mongoose.connection
 connection.once("connected", () => console.log("Database Connected ~"))
@@ -17,6 +21,10 @@ mongoose.connect("mongodb://localhost:27017/express-jwt", {
     useUnifiedTopology: true,
 })
 
-app.use("/user", userRouter);
+const book = require("./routes/book");
+app.use("/book", book);
 
-app.listen(3000, () => console.log("Server Started ~"));
+
+app.listen(3001,function (){
+    console.log("Listening at 3000")
+});

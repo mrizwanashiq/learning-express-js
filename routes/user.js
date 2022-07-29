@@ -1,8 +1,19 @@
-import express from "express";
+const express = require('express');
+const userModel = require('../models/user');
+const authenticate = require('../middlewares/authenticate');
+const jwt = require('jsonwebtoken');
+
 const router = express.Router();
-import userModel from "../models/user.js";
-import authenticate from "../middlewares/authenticate.js";
-import jwt from "jsonwebtoken";
+
+router.get("/view", (req, res) => {
+    try {
+        // const user = await userModel.find();
+        res.render("user/table");
+    } catch (error) {
+        res.status(500).send(error);
+
+    }
+})
 
 router.get("/", authenticate, async (req, res) => {
     try {
@@ -60,4 +71,4 @@ router.delete("/:id", authenticate, async (req, res) => {
     }
 })
 
-export default router;
+module.exports = router;
