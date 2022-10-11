@@ -1,13 +1,14 @@
 import express from "express";
 const router = express.Router();
-import userModel from "../models/user.js";
 import authenticate from "../middlewares/authenticate.js";
-import jwt from "jsonwebtoken";
+import validation from "../middlewares/validation.js";
+import schema from '../validations/user.validations.js'
+import Service from "../services/user.js"
 
 router.get("/", authenticate, async (req, res) => {
     try {
-        const users = await userModel.find();
-        res.send(users);
+        const data = await Service.get();
+        res.status(200).json(data);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -15,37 +16,36 @@ router.get("/", authenticate, async (req, res) => {
 
 router.get("/:id", authenticate, async (req, res) => {
     try {
-        const user = await userModel.findById(req.params.id);
-        res.send(user);
+        const data = await Service.getById(req.params.id);
+        res.status(200).json(data);
     } catch (error) {
         res.status(500).send(error);
     }
 })
 
-router.post("/register", async (req, res) => {
+router.post("/register", validation(schema.register.body, 'body'), async (req, res) => {
+    // try {
+    const data = await Service.register(req.body);
+    res.status(200).json(data);
+    // } catch (error) {
+    //     // res.status(error.status).send(error.message);
+    //     res.send(error);
+    // }
+})
+
+router.post("/login", validation(schema.login.body, 'body'), async (req, res) => {
     try {
-        const user = await userModel.create(req.body);
-        res.send(user);
+        const data = await Service.login(req.body);
+        res.status(200).json(data);
     } catch (error) {
-        res.status(500).send(error);
+        res.status(error.status).send(message);
     }
 })
 
-router.post("/login", async (req, res) => {
+router.patch("/:id", validation(schema.update.body, 'body'), authenticate, async (req, res) => {
     try {
-        const user = await userModel.findOne({ email: req.body.email, password: req.body.password });
-        if (!user) return res.status(401).send("Invalid email or password.");
-        const token = jwt.sign({ id: user._id }, "my_temporary_secret", { expiresIn: "1h" });
-        res.send(token);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-})
-
-router.patch("/:id", authenticate, async (req, res) => {
-    try {
-        const user = await userModel.findByIdAndUpdate(req.params.id, req.body);
-        res.send(user);
+        const user = await userModel.findByIdAndUpdate({ ...req.params, ...req.body });
+        res.status(200).json(data);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -53,8 +53,8 @@ router.patch("/:id", authenticate, async (req, res) => {
 
 router.delete("/:id", authenticate, async (req, res) => {
     try {
-        const user = await userModel.findByIdAndDelete(req.params.id);
-        res.send(user);
+        const data = await Service.delete(req.params.id);
+        res.status(200).json(data);
     } catch (error) {
         res.status(500).send(error);
     }
