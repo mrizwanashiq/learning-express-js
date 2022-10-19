@@ -6,14 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "npx jest",
-    "test:watch": "env-cmd ./.env.test jest --watchAll"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    }
+    "dev": "nodemon index.js"
   },
   "author": "mrizwanashiq",
   "license": "ISC",
@@ -21,16 +14,12 @@
     "@babel/preset-env": "^7.19.1",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
-    "env-cmd": "^10.1.0",
     "express": "^4.17.2",
-    "joi": "^17.6.1",
-    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.0",
-    "nodemon": "^2.0.15",
-    "reflect-metadata": "^0.1.13",
-    "supertest": "^6.2.4"
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
+    "nodemon": "^2.0.15",
     "babel-jest": "^29.0.3"
   }
 }
