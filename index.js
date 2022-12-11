@@ -61,7 +61,6 @@ app.put('/book/:id', (req, res) => {
 
 	// Remove item from the books array
 	for (let i = 0; i < books.length; i++) {
-		let book = books[i]
 		if (book.id === id) {
 			books[i] = book;
 		}
@@ -79,7 +78,7 @@ app.patch('/book/:id', (req, res) => {
 
 	// Remove item from the books array
 	for (let i = 0; i < books.length; i++) {
-		if (book[i].id === id) {
+		if (books[i].id === id) {
 			books[i] = {
 				...book[i],
 				...book
@@ -96,12 +95,7 @@ app.delete('/book/:id', (req, res) => {
 	const id = parseInt(req.params.id);
 
 	// Remove item from the books array
-	books = books.filter(i => {
-		if (i.id !== id) {
-			return true;
-		}
-		return false;
-	});
+	books = books.filter(i => i.id !== id);
 
 	res.send('Book is deleted');
 });
