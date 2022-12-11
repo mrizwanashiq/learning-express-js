@@ -56,7 +56,7 @@ app.put('/book/:id', (req, res) => {
 
 	// Remove item from the books array
 	for (let i = 0; i < books.length; i++) {
-		if (book.id === id) {
+		if (books[i].id === id) {
 			books[i] = book;
 		}
 	}
