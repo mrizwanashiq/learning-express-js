@@ -32,7 +32,7 @@ app.get('/books', (req, res) => {
 
 // GET by ID API
 app.get('/book/:id', (req, res) => {
-	// Reading ID from the URL
+	// Reading ID from the URL, and I am using parseInt to change the type of req.params.id from string to number (integer type)
 	const id = parseInt(req.params.id);
 
 	// Searching books for the id
