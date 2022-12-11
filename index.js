@@ -75,7 +75,7 @@ app.patch('/book/:id', (req, res) => {
 	for (let i = 0; i < books.length; i++) {
 		if (books[i].id === id) {
 			books[i] = {
-				...book[i],
+				...books[i],
 				...book
 			};
 		}
