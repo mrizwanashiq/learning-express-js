@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export default function authenticate(req, res, next) {
+const authenticate = (req, res, next) => {
     const token = req.header("authorization");
     if (!token) return res.status(401).send("Access denied. No token provided.");
 
@@ -14,3 +14,5 @@ export default function authenticate(req, res, next) {
         res.status(400).send("Invalid token.");
     }
 }
+
+export default authenticate;
