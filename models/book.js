@@ -1,8 +1,5 @@
-var mongoose=require("mongoose");
-var Schema=mongoose.Schema;
-const schema=Schema({
-
-    name: { type: String, required: true,maxlength:50 },
-
+import mongoose from "mongoose";
+const schema = mongoose.Schema({
+	name: { type: String, required: true },
 });
-module.exports=mongoose.model("Book",schema);
+export default mongoose.model("Book", schema);

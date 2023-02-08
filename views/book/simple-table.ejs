@@ -1,0 +1,27 @@
+<h1>Book</h1>
+<!-- Button trigger modal -->
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% data.forEach(function(person) { %>
+		<tr>
+			<td><%= person.name %></td>
+		</tr>
+		<% }); %>
+	</tbody>
+</table>
+
+<form
+	autocomplete="off"
+	action="/"
+	method="post"
+	enctype="application/x-www-form-urlencoded">
+	<div class="modal-body">
+		<input type="text" id="addName" name="name" placeholder="Name" />
+		<button type="submit" class="btn btn-primary">Add</button>
+	</div>
+</form>
