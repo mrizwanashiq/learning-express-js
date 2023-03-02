@@ -1,6 +1,6 @@
 // Importing package
-import express from 'express';
-import bodyParser from 'body-parser';
+import express from "express";
+import bodyParser from "body-parser";
 
 const app = express();
 const port = 2022;
@@ -12,43 +12,44 @@ let books = [];
 app.use(bodyParser.json());
 
 // POST API
-app.post('/book', (req, res) => {
+app.post("/book", (req, res) => {
 	const book = req.body;
 
-	// here length of books' array will be the id of that book
-	book.id = books.length + 1;
+	// Here I am getting the last book's id and adding 1 to it, if there is no book then I am assigning 1 to the id
+	book.id = books.length ? books[books.length - 1].id + 1 : 1;
 
 	// Output the book to the console for debugging
 	console.log(book);
 	books.push(book);
 
-	res.send('Book is added to the database');
+	res.send("Book is added to the database");
 });
 
 // GET API
-app.get('/books', (req, res) => {
+app.get("/book", (req, res) => {
 	res.json(books);
 });
 
 // GET by ID API
-app.get('/book/:id', (req, res) => {
-	// Reading ID from the URL, and I am using parseInt to change the type of req.params.id from string to number (integer type)
-	const id = parseInt(req.params.id);
+app.get("/book/:id", (req, res) => {
+	// Reading ID from the URL, + is used to convert string to number
+	const id = +req.params.id;
 
 	// Searching books for the id
-	for (let book of books) {
-		if (book.id === id) {
-			res.json(book);
-			return;
-		}
-	}
+	const book = books.find((book) => book.id === id);
 
-	// Sending 404 when not found something is a good practice
-	res.status(404).send('Book not found');
+	// Checking if book is present
+	if (book) {
+		// Sending the book as response with status code 200
+		res.status(200).json(book);
+	} else {
+		// Sending error message with status code 404
+		res.status(404).send("Book not found");
+	}
 });
 
 // PUT API
-app.put('/book/:id', (req, res) => {
+app.put("/book/:id", (req, res) => {
 	// Reading id from the URL
 	const id = parseInt(req.params.id);
 	const book = req.body;
@@ -61,38 +62,39 @@ app.put('/book/:id', (req, res) => {
 		}
 	}
 
-	res.send('Book is replace');
+	res.send("Book is replace");
 });
 
 // PATCH API
-app.patch('/book/:id', (req, res) => {
+app.patch("/book/:id", (req, res) => {
 	// Reading id from the URL
-	const id = parseInt(req.params.id);
+	const id = +req.params.id;
 	const book = req.body;
 	book.id = id;
 
-	// Remove item from the books array
+	// Search books for the id and update it with properties in the request
 	for (let i = 0; i < books.length; i++) {
-		if (books[i].id === id) {
-			books[i] = {
-				...books[i],
-				...book
-			};
+		if (book[i].id === id) {
+			// Here I am using the spread operator (`...`) to take all the properties
+			// from previous book and add the new properties to it
+			books[i] = { ...book[i], ...book };
 		}
 	}
 
-	res.send('Book is update');
+	res.send("Book is update");
 });
 
 // DELETE API
-app.delete('/book/:id', (req, res) => {
+app.delete("/book/:id", (req, res) => {
 	// Reading id from the URL
-	const id = parseInt(req.params.id);
+	const id = +req.params.id;
 
-	// Remove item from the books array
-	books = books.filter(i => i.id !== id);
+	// array.filter() method returns a new array with all the elements that pass the test implemented by the provided function
+	books = books.filter((i) => i.id !== id);
 
-	res.send('Book is deleted');
+	res.send("Book is deleted");
 });
 
-app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
+app.listen(port, () =>
+	console.log(`Hello world app listening on port ${port}!`)
+);
