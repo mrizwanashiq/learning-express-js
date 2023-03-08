@@ -12,7 +12,7 @@ app.use(cors());
 const connection = mongoose.connection
 connection.once("connected", () => console.log("Database Connected ~"))
 connection.on("error", error => console.log("Database Error: ", error))
-mongoose.connect("mongodb://localhost:27017/express-jwt", {
+mongoose.connect("mongodb://127.0.0.1:27017/express-jwt", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
