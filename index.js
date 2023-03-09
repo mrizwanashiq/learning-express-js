@@ -1,22 +1,20 @@
 import express from "express";
-import bodyparser from "body-parser";
-import cors from "cors";
-import mongoose from "mongoose"
-import userRouter from "./routes/user.js";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import fileRouter from "./routes/file.js";
 
 const app = express();
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
-app.use(cors());
-app.use("/user", userRouter);
+app.use("/file", fileRouter);
 
-const connection = mongoose.connection
-connection.once("connected", () => console.log("Database Connected ~"))
-connection.on("error", error => console.log("Database Error: ", error))
-mongoose.connect('mongodb://localhost:27017/db', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+const connection = mongoose.connection;
+connection.once("connected", () => console.log("Database Connected ~"));
+connection.on("error", (error) => console.log("Database Error: ", error));
+mongoose.connect("mongodb://127.0.0.1:27017/db", {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
 
 app.listen(2022, () => console.log("Server Started ~"));
