@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const schema = mongoose.Schema({
 	name: { type: String, required: true },
 	original_name: { type: String, required: true },
@@ -6,4 +7,5 @@ const schema = mongoose.Schema({
 	type: { type: String, required: true },
 	link: { type: String },
 });
+
 export default mongoose.model("File", schema);
