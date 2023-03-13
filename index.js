@@ -1,6 +1,5 @@
 import express from "express";
-import bodyparser from "body-parser";
-import cors from "cors";
+import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import userRouter from "./routes/user.js";
 import dotenv from "dotenv";
@@ -8,10 +7,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
-app.use(cors());
 app.use("/user", userRouter);
 
 const connection = mongoose.connection;
