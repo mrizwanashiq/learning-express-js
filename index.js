@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const connection = mongoose.connection;
 connection.once("connected", () => console.log("Database Connected ~"));
 connection.on("error", (error) => console.log("Database Error: ", error));
-mongoose.connect("mongodb://localhost:27017/my_first_data_base", {
+mongoose.connect("mongodb://127.0.0.1:27017/my_first_data_base", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
