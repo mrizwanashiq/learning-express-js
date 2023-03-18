@@ -16,47 +16,46 @@ router.get("/", async (req, res) => {
 			query.author = req.query.author;
 		}
 		if (req.query.price) {
-			if(typeof req.query.price === 'object'){
+			if (typeof req.query.price === "object") {
 				if (req.query.price.gt) {
 					query.price = { $gt: req.query.price.gt };
 				}
 				if (req.query.price.lt) {
 					query.price = { $lt: req.query.price.lt };
 				}
-			}else{
+			} else {
 				query.price = req.query.price;
 			}
 		}
 
 		if (req.query.stock) {
-			if(typeof req.query.stock === 'object'){
+			if (typeof req.query.stock === "object") {
 				if (req.query.stock.gt) {
 					query.stock = { $gt: req.query.stock.gt };
 				}
 				if (req.query.stock.lt) {
 					query.stock = { $lt: req.query.stock.lt };
 				}
-
-			}else{
+			} else {
 				query.stock = req.query.stock;
 			}
 		}
 
 		const sort = {};
-		if(req.query.sort){
-			if(typeof req.query.sort === 'object'){
-				req.query.sort.forEach(element => {
-					if(element.startsWith('-')){
+		if (req.query.sort) {
+			if (typeof req.query.sort === "object") {
+				req.query.sort.forEach((element) => {
+					if (element.startsWith("-")) {
 						sort[element.substring(1)] = -1;
-					}else{
+					} else {
 						sort[element] = 1;
 					}
 				});
 				console.log(sort);
-			}else{
-				if(req.query.sort.startsWith('-')){
+			} else {
+				if (req.query.sort.startsWith("-")) {
 					sort[req.query.sort.substring(1)] = -1;
-				}else{
+				} else {
 					sort[req.query.sort] = 1;
 				}
 				console.log(sort);
