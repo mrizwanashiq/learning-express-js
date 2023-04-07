@@ -1,11 +1,10 @@
 import express from "express";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import bookRouter from "./routes/book.js";
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const connection = mongoose.connection;
 connection.once("connected", () => console.log("Database Connected ~"));
