@@ -1,6 +1,5 @@
 import express from "express";
 import expressLayouts from "express-ejs-layouts";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import book from "./routes/book.js";
 
@@ -9,8 +8,8 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "layouts");
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 const connection = mongoose.connection;
 connection.once("connected", () => console.log("Database Connected ~"));
