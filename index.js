@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import userRouter from "./routes/user.js";
 import dotenv from "dotenv";
@@ -7,8 +6,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
 app.use("/user", userRouter);
 
