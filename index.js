@@ -1,11 +1,10 @@
 import express from "express";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import userRouter from "./routes/user.js";
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const connection = mongoose.connection;
 connection.once("connected", () => console.log("Database Connected ~"));
