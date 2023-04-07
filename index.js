@@ -1,6 +1,5 @@
 // Importing package
 import express from "express";
-import bodyParser from "body-parser";
 
 const app = express();
 const port = 2022;
@@ -9,7 +8,7 @@ const port = 2022;
 let books = [];
 
 // Configuring middlewares
-app.use(bodyParser.json());
+app.use(express.json());
 
 // POST API
 app.post("/book", (req, res) => {
