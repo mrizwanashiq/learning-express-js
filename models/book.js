@@ -5,4 +5,5 @@ const schema = mongoose.Schema({
 	price: { type: Number, required: true },
 	stock: { type: Number },
 });
+
 export default mongoose.model("Book", schema);
