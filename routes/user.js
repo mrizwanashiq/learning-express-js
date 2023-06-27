@@ -15,16 +15,21 @@ router.get("/", authenticate, async (req, res) => {
 	}
 });
 
-router.get("/:id", authenticate, validate(schema.params), async (req, res) => {
-	try {
-		const user = await userModel.findById(req.params.id);
-		res.send(user);
-	} catch (error) {
-		res.status(500).send(error);
+router.get(
+	"/:id",
+	authenticate,
+	validate(schema.id.params),
+	async (req, res) => {
+		try {
+			const user = await userModel.findById(req.params.id);
+			res.send(user);
+		} catch (error) {
+			res.status(500).send(error);
+		}
 	}
-});
+);
 
-router.post("/register", validate(schema.register), async (req, res) => {
+router.post("/register", validate(schema.register.body), async (req, res) => {
 	try {
 		const user = await userModel.create(req.body);
 		res.send(user);
@@ -33,7 +38,7 @@ router.post("/register", validate(schema.register), async (req, res) => {
 	}
 });
 
-router.post("/login", validate(schema.login), async (req, res) => {
+router.post("/login", validate(schema.login.body), async (req, res) => {
 	try {
 		const user = await userModel.findOne({
 			email: req.body.email,
@@ -52,7 +57,8 @@ router.post("/login", validate(schema.login), async (req, res) => {
 router.patch(
 	"/:id",
 	authenticate,
-	validate(schema.update),
+	validate(schema.update.params),
+	validate(schema.update.body),
 	async (req, res) => {
 		try {
 			const user = await userModel.findByIdAndUpdate(req.params.id, req.body);
@@ -66,7 +72,7 @@ router.patch(
 router.delete(
 	"/:id",
 	authenticate,
-	validate(schema.params),
+	validate(schema.id.params),
 	async (req, res) => {
 		try {
 			const user = await userModel.findByIdAndDelete(req.params.id);
