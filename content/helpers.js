@@ -1,18 +1,8 @@
 export const ControllerTestUser = [
   {
-    name: "Test One",
-    email: "test1@testing.com",
-    password: "Test1234",
-  },
-  {
-    name: "Test two",
-    email: "test2@testing.com",
-    password: "Test1234",
-  },
-  {
-    name: "Test three",
-    email: "test3@testing.com",
-    password: "Test1234",
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    age: 25,
   },
 ]
 

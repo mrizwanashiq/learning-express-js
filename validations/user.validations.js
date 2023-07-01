@@ -1,24 +1,18 @@
 import Joi from 'joi'
 
 const validation = {
-    register: {
+    add: {
         body: Joi.object().keys({
             name: Joi.string().required(),
-            password: Joi.string().required(),
-            email: Joi.string().email().required()
-        })
-    },
-    login: {
-        body: Joi.object().keys({
             email: Joi.string().email().required(),
-            password: Joi.string().required()
+            age: Joi.number()
         })
     },
     update: {
         body: Joi.object().keys({
             name: Joi.string(),
-            password: Joi.string(),
-            email: Joi.string().email()
+            email: Joi.string().email(),
+            age: Joi.number()
         })
     },
 }
