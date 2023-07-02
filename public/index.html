@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #connStatusContain {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        #inputContain {
+            position: fixed;
+            bottom: 2rem;
+            right: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        #messages {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            height: calc(100vw - 20%);
+            overflow-y: auto;
+        }
+
+        p:not([data-clientConnected]):not([data-clientDisconnected]):not([data-connectionStatus]) {
+            padding: 1.2rem 1.5rem;
+            width: fit-content;
+            max-width: 40rem;
+            background-color: antiquewhite;
+            border-top-right-radius: 1.2rem;
+            border-top-left-radius: 1.2rem;
+        }
+
+        p:not([data-clientConnected]):not([data-clientDisconnected]):not([data-connectionStatus]):not([data-me]) {
+            border-bottom-right-radius: 1.2rem;
+            align-self: flex-start;
+        }
+
+        p[data-me] {
+            align-self: flex-end;
+            border-bottom-left-radius: 1.2rem;
+            border-bottom-right-radius: 0;
+        }
+
+        p[data-clientConnected] {
+            align-self: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Anonymous</h1>
+    <section id="inputContain">
+        <textarea type="text" id="inputMessage"></textarea>
+        <button id="sendMessage">Send</button>
+    </section>
+    <section id="connStatusContain">
+        <h3>Status</h3>
+        <p id="socketStatus" data-connectionStatus></p>
+    </section>
+    <section id="messages">
+        <h4>;)</h4>
+    </section>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
