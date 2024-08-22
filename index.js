@@ -1,9 +1,12 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 const port = 3006;
+const JWT_SECRET = "yourSecretKey";
 
 app.use(express.json());
 app.use(cookieParser("yourSecretKey")); // For signed cookies
